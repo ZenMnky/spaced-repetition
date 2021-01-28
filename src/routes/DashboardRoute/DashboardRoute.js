@@ -1,8 +1,8 @@
-import config from '../../config';
-import TokenService from '../../services/token-service';
-
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+
+import config from '../../config';
+import TokenService from '../../services/token-service';
 
 class DashboardRoute extends Component {
   constructor(props){
@@ -16,6 +16,8 @@ class DashboardRoute extends Component {
 
   componentDidMount(){
     this.getLangAndWords();
+    console.log(TokenService.getAuthToken())
+
   }
 
   getLangAndWords(){
@@ -32,11 +34,6 @@ class DashboardRoute extends Component {
         words: result.words
       })
     })  
-  }
-
-  handleSubmit(e){
-    e.preventDefault();
-    console.log('submit button fired');
   }
 
   render() {
