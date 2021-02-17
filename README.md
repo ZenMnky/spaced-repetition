@@ -1,4 +1,32 @@
-# Spaced Repetition Capstone
+# Spaced Repetition App
+
+🚧 In Development 🚧
+📆 Target Release Date: 2021.02.19
+## Project Description
+
+🎯 **Task**  
+- Develop the business logic and user interface to satisfy user stories, integration tests, and end-to-end tests
+- Application must use a linked list in the business logic
+
+📋 **Tech Notes**
+
+- 🧪  ___Testing___
+    - **End-to-end:** Cypress
+    - **Integration:** Mocha/Chai, Supertest
+- 💻  ___Frontend___:
+    - **Framework:** React.js
+    - **Language:** JS ES6
+    - **Styling:** CSS
+    - **State management:** Context API
+- 📡💾 ___API/Backend___:
+    - **API Structure:** RESTful
+    - **User Authentication:** JWTs
+    - **ORM:** Knex.js
+    - **Database:** PostgreSQL
+- 🌠 ___Other Attributes:___
+    - Mobile First
+    - Responsive
+    - Semantic HTML (Accessability)
 
 ## Setup
 
