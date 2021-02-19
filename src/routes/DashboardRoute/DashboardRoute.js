@@ -38,7 +38,7 @@ class DashboardRoute extends Component {
 
   render() {
     let language = this.state.language.name;
-    let totalCorrectAnswers = this.state.language.total_score;
+    let totalCorrectAnswers = this.state.language.totalScore;
     let practiceWords = this.state.words.map( (word,index) => {
       return (
         <li key={`${word.original}`+index}>

@@ -6,51 +6,53 @@ class LearningRoute extends Component {
   constructor(props){
     super(props);
     this.state = {
-      next_word: null,
-      total_score: null,
-      word_correct_count: null,
-      word_incorrect_count: null
+      nextWord: null,
+      totalScore: null,
+      wordCorrectCount: null,
+      wordIncorrectCount: null
     }
   }
 
-  componentDidMount(){
-    this.getNextWord();
+  async componentDidMount(){
+    await this.getNextWord();
   }
 
-  getNextWord(){
+  async getNextWord(){
     console.log('getNextWord fired')
-    fetch(`${config.API_ENDPOINT}/language/head`, {
+    let response = await fetch(`${config.API_ENDPOINT}/language/head`, {
       method: 'GET',
       headers: {
         'authorization': `Bearer ${TokenService.getAuthToken()}`,
       },
+    });
+    let jsonResponse =  await response.json();
+    
+    this.setState({
+      nextWord: jsonResponse.nextWord,
+      totalScore: jsonResponse.totalScore,
+      wordCorrectCount: jsonResponse.wordCorrectCount,
+      wordIncorrectCount: jsonResponse.wordIncorrectCount
     })
-    .then(response => response.json())
-    .then( result => {
-      this.setState({
-        next_word: result.next_word,
-        total_score: result.total_score,
-        word_correct_count: result.word_correct_count,
-        word_incorrect_count: result.word_incorrect_count
-      })
-    })  
+  
   }
 
 
   render() {
 
     let {
-      next_word,
-      total_score,
-      word_correct_count,
-      word_incorrect_count } = this.state;
+      nextWord,
+      totalScore,
+      wordCorrectCount,
+      wordIncorrectCount } = this.state;
+    
+    
 
     
     return (
       <section>
         <h2>Translate the word:</h2>
         <span>
-          <h3>{next_word}</h3>
+          <h3>{nextWord == null ? 'Loading...' : nextWord}</h3>
         </span>
     
         <main>
@@ -66,9 +68,9 @@ class LearningRoute extends Component {
           </form>
 
           <span>
-            <p>Your total score is: {total_score}</p>
-            <p>You have answered this word correctly {word_correct_count} times.</p>
-            <p>You have answered this word incorrectly {word_incorrect_count} times.</p>
+            <p>Your total score is: {totalScore == null ? 'Loading...' : totalScore}</p>
+            <p>You have answered this word correctly {wordCorrectCount == null ? 'Loading...' : wordCorrectCount} times.</p>
+            <p>You have answered this word incorrectly {wordIncorrectCount == null ? 'Loading...' : wordIncorrectCount} times.</p>
             </span>
         </main>
       </section>
