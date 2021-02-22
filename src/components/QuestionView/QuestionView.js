@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import UserContext from '../../contexts/UserContext';
 import LanguageApiService from '../../services/language-api-service';
+import QuestionInputForm from '../QuestionInputForm/QuestionInputForm';
 
 
 
@@ -15,27 +16,6 @@ export default class QuestionView extends Component{
         this.context.setError(err)
       }
     }
-
-    // handleSubmitGuess = (e) => {
-    //     // prevent reload
-    //     e.preventDefault();
-        
-    //     // switch to answer view
-    //     // this.props.toggleQuestionView();
-
-    //     // grab guess and clear input field
-    //     let { guess } = this.state;
-    //     this.guessChanged('');
-    
-    //     // http POST request to API
-    //     this.props.value.postGuess(guess)
-    //     //
-    
-    // }
-    
-    // guessChanged = (guess) => {
-    // this.setState({ guess })
-    // }
 
     render() {
       let { words, answer, head } = this.context;
@@ -85,23 +65,7 @@ export default class QuestionView extends Component{
         
             <main>
               <h4>Question Input Form</h4>
-              {/* <form>
-                <label htmlFor='learn-guess-input'>
-                  What's the translation for this word?
-                </label>
-                <input 
-                  id='learn-guess-input' 
-                  type='text' 
-                  name='learn-guess-input' 
-                  value={this.state.guess}
-                  onChange={e => this.guessChanged(e.target.value)}
-                  required
-                />
-    
-                <button onClick={(e) => this.handleSubmitGuess(e)} type='submit'>
-                  Submit your answer
-                </button>
-              </form> */}
+              <QuestionInputForm toggleView={this.props.toggleView} />
     
               <span id='question-view_score-display'>
                 <p>Your total score is: {score}</p>

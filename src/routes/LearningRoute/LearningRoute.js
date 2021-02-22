@@ -27,7 +27,7 @@ class LearningRoute extends Component {
   render() {
 
    let view = (this.state.questionView)
-    ? <QuestionView toggleQuestionView={this.toggleQuestionView}/> 
+    ? <QuestionView toggleView={this.toggleQuestionView}/> 
     : 'Answer View';
     
     return (
