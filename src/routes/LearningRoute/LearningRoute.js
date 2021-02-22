@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import QuestionView from '../../components/QuestionView/QuestionView';
-
-import config from '../../config';
-import AppContext from '../../contexts/AppContext';
-import TokenService from '../../services/token-service';
-
+import UserContext from '../../contexts/UserContext';
+import languageApiService from '../../services/language-api-service';
 class LearningRoute extends Component {
-  static contextType = AppContext;
+  static contextType = UserContext;
 
   constructor(props){
     super(props);
@@ -15,27 +12,29 @@ class LearningRoute extends Component {
     }
   }
 
+  async componentDidMount() {
+    let head = await languageApiService.getNextWord();
+    console.log('head: ', head)
+    this.context.setHead(head)
+  }
+
   toggleQuestionView = () => {
     this.setState({
       questionView: !this.state.questionView
     })
   }
   
-  
-
-  
-
-
   render() {
 
-
-
-   let view = this.state.questionView ? <QuestionView toggleQuestionView={this.toggleQuestionView}/> : 'Answer View';
+   let view = (this.state.questionView)
+    ? <QuestionView toggleQuestionView={this.toggleQuestionView}/> 
+    : 'Answer View';
     
     return (
-      <>
+      <section id='learningView'>
         {view}
-      </>
+      </section>
+      
     );
   }
 }

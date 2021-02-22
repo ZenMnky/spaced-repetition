@@ -1,45 +1,91 @@
 import React, {Component} from 'react'
-import AppContext from '../../contexts/AppContext';
+import UserContext from '../../contexts/UserContext';
+import LanguageApiService from '../../services/language-api-service';
+
+
 
 export default class QuestionView extends Component{
-    static contextType = AppContext;
+    static contextType = UserContext;
     
-    constructor(props){
-        super(props);
-        this.state = {
-          guess: '',
-        }
+    async componentDidMount() {
+      try {
+        let words = await LanguageApiService.getWords();
+        this.context.setWords(words)
+      } catch(err) {
+        this.context.setError(err)
+      }
     }
 
-    handleSubmitGuess = (e) => {
-        e.preventDefault();
-        this.props.toggleQuestionView();
-        // grab and clear
-        let { guess } = this.state;
-        this.guessChanged('');
+    // handleSubmitGuess = (e) => {
+    //     // prevent reload
+    //     e.preventDefault();
+        
+    //     // switch to answer view
+    //     // this.props.toggleQuestionView();
+
+    //     // grab guess and clear input field
+    //     let { guess } = this.state;
+    //     this.guessChanged('');
     
-        // http POST request to API
+    //     // http POST request to API
+    //     this.props.value.postGuess(guess)
+    //     //
     
-        //
+    // }
     
-    }
-    
-    guessChanged = (guess) => {
-    this.setState({ guess })
-    }
+    // guessChanged = (guess) => {
+    // this.setState({ guess })
+    // }
 
     render() {
-        let { nextWord, totalScore, wordCorrectCount, wordIncorrectCount } = this.context;
+      let { words, answer, head } = this.context;
 
-        return (
-            <section id='questionView'>
+      let language = (words.language) 
+        ? words.language.name
+        : 'Language loading...';
+      console.log('language: ', language)
+
+      let score = null;
+      if (answer.totalScore) {
+        score = answer.totalScore;
+      } else if ( head.totalScore ) {
+        score = head.totalScore;
+      } else {
+        score = 0;
+      }
+
+      let nextWord = null;
+      if (answer.nextWord) {
+        nextWord = answer.nextWord;
+      } else if (head.nextWord) {
+        nextWord = head.nextWord;
+      } else {
+        nextWord = 'Loading next word...';
+      }
+
+      head = (head) ? head : {};
+
+      let wordCorrectCount = (head.wordCorrectCount)
+        ? head.wordCorrectCount
+        : 'Loading correct count...';
+
+      let wordIncorrectCount = (head.wordIncorrectCount)
+      ? head.wordIncorrectCount
+      : 'Loading incorrect count...';
+
+
+
+      return (
+          <section id='questionView'>
+            <h1>{language}</h1>
             <h2>Translate the word:</h2>
             <span>
-              <h3>{nextWord == null ? 'Loading...' : nextWord}</h3>
+              <h3>{nextWord}</h3>
             </span>
         
             <main>
-              <form>
+              <h4>Question Input Form</h4>
+              {/* <form>
                 <label htmlFor='learn-guess-input'>
                   What's the translation for this word?
                 </label>
@@ -55,16 +101,16 @@ export default class QuestionView extends Component{
                 <button onClick={(e) => this.handleSubmitGuess(e)} type='submit'>
                   Submit your answer
                 </button>
-              </form>
+              </form> */}
     
-              <span>
-                <p>Your total score is: {totalScore == null ? 'Loading...' : totalScore}</p>
-                <p>You have answered this word correctly {wordCorrectCount == null ? 'Loading...' : wordCorrectCount} times.</p>
-                <p>You have answered this word incorrectly {wordIncorrectCount == null ? 'Loading...' : wordIncorrectCount} times.</p>
+              <span id='question-view_score-display'>
+                <p>Your total score is: {score}</p>
+                <p>You have answered this word correctly {wordCorrectCount} times.</p>
+                <p>You have answered this word incorrectly {wordIncorrectCount} times.</p>
                 </span>
             </main>
           </section>
-        )
+      )
     }
     
 }

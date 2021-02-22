@@ -12,7 +12,9 @@ const UserContext = React.createContext({
   setError: () => {},
   clearError: () => {},
   setUser: () => {},
-  setStateValue: () => {},
+  setHead: () => {},
+  setWords: () => {},
+  setAnswer: () => {},
   processLogin: () => {},
   processLogout: () => {},
 })
@@ -69,14 +71,17 @@ export class UserProvider extends Component {
   setUser = user => {
     this.setState({ user })
   }
-  /**
-   * setStateValue
-   * @param {*} value - value name must match state variable name
-   * uses destructuring assignment
-   * used for user, words, answer, head
-   */
-  setStateValue = (value) => {
-    this.setState({ value })
+
+  setHead = head => {
+    this.setState({ head })
+  }
+
+  setWords = words => {
+    this.setState({ words })
+  }
+
+  setAnswer = answer => {
+    this.setState({ answer })
   }
 
   processLogin = authToken => {
@@ -131,7 +136,9 @@ export class UserProvider extends Component {
       setError: this.setError,
       clearError: this.clearError,
       setUser: this.setUser,
-      setStateValue: this.setStateValue,
+      setHead: this.setHead,
+      setWords: this.setWords,
+      setAnswer: this.setAnswer,      
       processLogin: this.processLogin,
       processLogout: this.processLogout,
     }
