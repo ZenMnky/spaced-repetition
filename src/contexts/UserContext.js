@@ -6,9 +6,15 @@ import IdleService from '../services/idle-service'
 const UserContext = React.createContext({
   user: {},
   error: null,
+  head: {},
+  words: [],
+  answer: {},
   setError: () => {},
   clearError: () => {},
   setUser: () => {},
+  setHead: () => {},
+  setWords: () => {},
+  setAnswer: () => {},
   processLogin: () => {},
   processLogout: () => {},
 })
@@ -18,7 +24,13 @@ export default UserContext
 export class UserProvider extends Component {
   constructor(props) {
     super(props)
-    const state = { user: {}, error: null }
+    const state = { 
+      error: null,
+      user: {}, 
+      head: {},
+      words: {},
+      answer: {}
+     }
 
     const jwtPayload = TokenService.parseAuthToken()
 
@@ -35,7 +47,7 @@ export class UserProvider extends Component {
 
   componentDidMount() {
     if (TokenService.hasAuthToken()) {
-      IdleService.regiserIdleTimerResets()
+      IdleService.registerIdleTimerResets()
       TokenService.queueCallbackBeforeExpiry(() => {
         this.fetchRefreshToken()
       })
@@ -60,6 +72,18 @@ export class UserProvider extends Component {
     this.setState({ user })
   }
 
+  setHead = head => {
+    this.setState({ head })
+  }
+
+  setWords = words => {
+    this.setState({ words })
+  }
+
+  setAnswer = answer => {
+    this.setState({ answer })
+  }
+
   processLogin = authToken => {
     TokenService.saveAuthToken(authToken)
     console.log('authToken: ', authToken)
@@ -69,7 +93,7 @@ export class UserProvider extends Component {
       name: jwtPayload.name,
       username: jwtPayload.sub,
     })
-    IdleService.regiserIdleTimerResets()
+    IdleService.registerIdleTimerResets()
     TokenService.queueCallbackBeforeExpiry(() => {
       this.fetchRefreshToken()
     })
@@ -104,11 +128,17 @@ export class UserProvider extends Component {
 
   render() {
     const value = {
-      user: this.state.user,
       error: this.state.error,
+      user: this.state.user,
+      head: this.state.head,
+      words: this.state.words,
+      answer: this.state.answer,
       setError: this.setError,
       clearError: this.clearError,
       setUser: this.setUser,
+      setHead: this.setHead,
+      setWords: this.setWords,
+      setAnswer: this.setAnswer,      
       processLogin: this.processLogin,
       processLogout: this.processLogout,
     }

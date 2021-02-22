@@ -1,70 +1,67 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-
-import config from '../../config';
+import UserContext from '../../contexts/UserContext';
+import languageApiService from '../../services/language-api-service';
 import TokenService from '../../services/token-service';
 
 class DashboardRoute extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      language: '',
-      words: [],
+  static contextType = UserContext;
+
+
+  async componentDidMount(){
+    console.log(TokenService.getAuthToken())
+    if(TokenService.hasAuthToken()){
+      await this.getAndSetWords();
     }
   }
 
-
-  componentDidMount(){
-    this.getLangAndWords();
-    console.log(TokenService.getAuthToken())
-
-  }
-
-  getLangAndWords(){
-    fetch(`${config.API_ENDPOINT}/language`, {
-      method: 'GET',
-      headers: {
-        'authorization': `Bearer ${TokenService.getAuthToken()}`,
-      },
-    })
-    .then(response => response.json())
-    .then( result => {
-      this.setState({
-        language: result.language,
-        words: result.words
-      })
-    })  
+  async getAndSetWords(){
+    let words = await languageApiService.getWords();
+    this.context.setWords(words);
   }
 
   render() {
-    let language = this.state.language.name;
-    let totalCorrectAnswers = this.state.language.totalScore;
-    let practiceWords = this.state.words.map( (word,index) => {
-      return (
-        <li key={`${word.original}`+index}>
-          <h4>{word.original}</h4>
-          <p>Correct answer count: {word.correct_count}</p>
-          <p>Incorrect answer count: {word.incorrect_count}</p>
-        </li>
-      )
-    })
-    return (
-      <section>
-        <h2>{language}</h2>
-        <p>Total correct answers: {totalCorrectAnswers}</p>
-      
-        <h3>Words to practice</h3>
-          <ul>
-            {practiceWords}
-          </ul>
-        
-        <Link to='/learn'>
-          <button>
-            Start practicing
-          </button>
-        </Link>
 
-      </section>
+    let { words } = this.context;
+    let { language } = words;
+
+
+
+    let languageName = (language) ? language.name : 'Loading...';
+    let totalCorrectAnswers = (language) ? language.total_score : 'Loading...';
+    let practiceWords = '';
+    if(words && words.words !== undefined){
+      practiceWords = words.words.map( (word, index) => {
+        return (
+          <li key={`${word.original}`+index}>
+            <h4>{word.original}</h4>
+            <p>Correct answer count: {word.correct_count}</p>
+            <p>Incorrect answer count: {word.incorrect_count}</p>
+          </li>
+          )}
+      )
+    } else {
+      practiceWords = <li>Loading...</li>;
+    }
+
+    
+    return (
+        <section>
+          <h2>{languageName}</h2>
+          <p>Total correct answers: {totalCorrectAnswers}</p>
+        
+          <h3>Words to practice</h3>
+            <ul>
+              {practiceWords}
+            </ul>
+          
+          <Link to='/learn'>
+            <button>
+              Start practicing
+            </button>
+          </Link>
+        </section>
+     
     );
   }
 }
