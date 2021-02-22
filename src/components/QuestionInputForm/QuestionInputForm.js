@@ -17,7 +17,7 @@ export default class QuestionInputForm extends Component {
         e.preventDefault();
 
         // switch to answer view
-        // this.props.toggleView();
+        this.props.toggleView();
 
         // grab guess and clear input field
         let { guess } = this.state;

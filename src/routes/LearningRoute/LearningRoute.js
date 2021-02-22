@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import AnswerView from '../../components/AnswerView/AnswerView';
 import QuestionView from '../../components/QuestionView/QuestionView';
 import UserContext from '../../contexts/UserContext';
 import languageApiService from '../../services/language-api-service';
@@ -28,7 +29,7 @@ class LearningRoute extends Component {
 
    let view = (this.state.questionView)
     ? <QuestionView toggleView={this.toggleQuestionView}/> 
-    : 'Answer View';
+    : <AnswerView toggleView={this.toggleQuestionView} />;
     
     return (
       <section id='learningView'>

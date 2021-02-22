@@ -45,11 +45,11 @@ export default class QuestionView extends Component{
 
       head = (head) ? head : {};
 
-      let wordCorrectCount = (head.wordCorrectCount)
+      let wordCorrectCount = (head.wordCorrectCount !== null)
         ? head.wordCorrectCount
         : 'Loading correct count...';
 
-      let wordIncorrectCount = (head.wordIncorrectCount)
+      let wordIncorrectCount = (head.wordIncorrectCount !== null)
       ? head.wordIncorrectCount
       : 'Loading incorrect count...';
 
@@ -71,7 +71,7 @@ export default class QuestionView extends Component{
                 <p>Your total score is: {score}</p>
                 <p>You have answered this word correctly {wordCorrectCount} times.</p>
                 <p>You have answered this word incorrectly {wordIncorrectCount} times.</p>
-                </span>
+              </span>
             </main>
           </section>
       )
