@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import UserContext from '../../contexts/UserContext';
+import languageApiService from '../../services/language-api-service';
 
 export default class QuestionInputForm extends Component {
     static contextType = UserContext;
@@ -11,7 +12,7 @@ export default class QuestionInputForm extends Component {
         }
     }
 
-    handleSubmitGuess = (e) => {
+    handleSubmitGuess = async(e) => {
         // prevent reload
         e.preventDefault();
 
@@ -21,12 +22,16 @@ export default class QuestionInputForm extends Component {
         // grab guess and clear input field
         let { guess } = this.state;
         this.guessChanged('');
-        console.log('guess: ', guess)
 
-        // http POST request to API
-       
-        //
+        // http POST request to API && store the response as 'answer' in state
+        let guessResponse = await languageApiService.postGuess(guess);
+        this.context.setAnswer(guessResponse)
+
+        // get head && set state with setHead
+        let headResponse = await languageApiService.getNextWord();
+        this.context.setHead(headResponse);
     }
+    
     
     guessChanged = (guess) => {
         this.setState({ guess })
@@ -40,7 +45,7 @@ export default class QuestionInputForm extends Component {
                 </label>
 
                 <br />
-                
+
                 <input 
                   id='learn-guess-input' 
                   type='text' 
