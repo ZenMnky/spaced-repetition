@@ -23,7 +23,6 @@ export default class QuestionView extends Component{
       let language = (words.language) 
         ? words.language.name
         : 'Language loading...';
-      console.log('language: ', language)
 
       let score = null;
       if (answer.totalScore) {

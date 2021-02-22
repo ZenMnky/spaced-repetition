@@ -9,7 +9,6 @@ class DashboardRoute extends Component {
 
 
   async componentDidMount(){
-    console.log(TokenService.getAuthToken())
     if(TokenService.hasAuthToken()){
       await this.getAndSetWords();
     }

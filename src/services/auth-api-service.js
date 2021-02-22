@@ -17,7 +17,6 @@ const AuthApiService = {
       )
   },
   postLogin({ username, password }) {
-    console.log(JSON.stringify({ username, password }))
     return fetch(`${config.API_ENDPOINT}/auth/token`, {
       method: 'POST',
       headers: {

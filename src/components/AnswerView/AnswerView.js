@@ -29,8 +29,6 @@ export default class AnswerView extends Component {
             answerResponse = 'Loading...';
         }
     
-        console.log('isCorrect: ', isCorrect)
-
         return (
             <section id='answer-view'>
                 <h1>{answerResponse}</h1>

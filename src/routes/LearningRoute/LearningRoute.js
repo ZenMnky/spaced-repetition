@@ -15,7 +15,6 @@ class LearningRoute extends Component {
 
   async componentDidMount() {
     let head = await languageApiService.getNextWord();
-    console.log('head: ', head)
     this.context.setHead(head)
   }
 

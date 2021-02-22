@@ -23,7 +23,6 @@ const languageApiService = {
     },
 
     async getNextWord() {
-        console.log('getNextWord fired!')
         let response = await fetch(`${config.API_ENDPOINT}/language/head`, {
             method: 'GET',
             headers: {
