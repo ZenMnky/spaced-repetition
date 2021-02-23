@@ -1,7 +1,5 @@
 # Spaced Repetition App
 
-🚧 In Development 🚧    
-📆 Target Release Date: 2021.02.19
 ## Project Description
 
 🎯 **Task**  
