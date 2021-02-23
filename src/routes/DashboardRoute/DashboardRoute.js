@@ -49,16 +49,17 @@ class DashboardRoute extends Component {
           <h2>{languageName}</h2>
           <p>Total correct answers: {totalCorrectAnswers}</p>
         
-          <h3>Words to practice</h3>
-            <ul>
-              {practiceWords}
-            </ul>
-          
           <Link to='/learn'>
             <button>
               Start practicing
             </button>
           </Link>
+
+          <h3>Words to practice</h3>
+            <ul>
+              {practiceWords}
+            </ul>
+          
         </section>
      
     );
