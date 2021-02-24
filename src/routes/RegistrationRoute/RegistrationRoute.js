@@ -1,31 +1,28 @@
-import React, { Component } from 'react'
-import RegistrationForm from '../../components/RegistrationForm/RegistrationForm'
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
 
-class RegistrationRoute extends Component {
-  static defaultProps = {
-    history: {
-      push: () => {},
-    },
+function RegistrationRoute() {
+
+  const history = useHistory();
+
+  const handleRegistrationSuccess = () => {
+    history.push('/')
   }
 
-  handleRegistrationSuccess = () => {
-    const { history } = this.props
-    history.push('/login')
-  }
-
-  render() {
     return (
       <section>
         <p>
-          Practice learning a language with the spaced reptition revision technique.
+          Practice learning a language with the spaced repetition revision technique.
         </p>
         <h2>Sign up</h2>
         <RegistrationForm
-          onRegistrationSuccess={this.handleRegistrationSuccess}
+          onRegistrationSuccess={() => {
+            handleRegistrationSuccess();
+          }}
         />
       </section>
     );
-  }
 }
 
-export default RegistrationRoute
+export default RegistrationRoute;
