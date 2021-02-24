@@ -17,6 +17,7 @@ const UserContext = React.createContext({
   setAnswer: () => {},
   processLogin: () => {},
   processLogout: () => {},
+  testContext: () => {}
 })
 
 export default UserContext
@@ -84,7 +85,12 @@ export class UserProvider extends Component {
     this.setState({ answer })
   }
 
-  processLogin = authToken => {
+  testContext = () => {
+    console.log('Test Context fired')
+  }
+
+  processLogin = (authToken) => {
+
     TokenService.saveAuthToken(authToken)
     const jwtPayload = TokenService.parseAuthToken()
     this.setUser({
@@ -140,6 +146,7 @@ export class UserProvider extends Component {
       setAnswer: this.setAnswer,      
       processLogin: this.processLogin,
       processLogout: this.processLogout,
+      testContext: this.testContext,
     }
     return (
       <UserContext.Provider value={value}>
