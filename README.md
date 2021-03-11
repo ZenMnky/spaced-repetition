@@ -1,9 +1,10 @@
 # Spaced Repetition App
+- [API Repo](https://github.com/ZenMnky/spaced-repetition-api)
 
 ## Project Description
 
 🎯 **Task**  
-- Develop the business logic and user interface to satisfy user stories, integration tests, and end-to-end tests
+- Develop the business logic and user interface to satisfy user stories & back-end tests
 - Application must use a linked list in the business logic
 
 📋 **Tech Notes**
